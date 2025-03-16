@@ -11,7 +11,7 @@
         </div>
     @endif
 
-    <a href="{{ route('orders.invoice') }}" class="btn btn-primary mb-3" target="_blank">Cetak Struk (PDF)</a>
+    <a href="{{ route('orders.invoice', ['userId' => Auth::id()]) }}" class="btn btn-primary mb-3" target="_blank">Cetak Struk (PDF)</a>
 
     <table class="table table-bordered bg-light ">
         <thead>
@@ -35,15 +35,6 @@
                     <td>{{ ucfirst($order->status) }}</td>
                     <td>{{ $order->notes }}</td>
                     <td>
-                        <a href="{{ route('orders.show', $order->id) }}" class="btn btn-info">Detail</a>
-                        @if ($order->status == 'pending')
-                            <form action="{{ route('orders.update', $order->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('PATCH')
-                                <input type="hidden" name="status" value="diproses">
-                                <button type="submit" class="btn btn-warning">Proses</button>
-                            </form>
-                        @endif
                         <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
