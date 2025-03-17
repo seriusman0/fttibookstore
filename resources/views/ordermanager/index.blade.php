@@ -21,7 +21,7 @@
                     @foreach($userOrders as $order)
                         <tr>
                             <td>{{ $order->id }}</td>
-                            <td>{{ $order->menu->name }}</td>
+                            <td>{{ $order->menu->nama }}</td>
                             <td>{{ $order->jumlah }}</td>
                             <td>{{ number_format($order->total_harga, 2) }}</td>
                             <td>
