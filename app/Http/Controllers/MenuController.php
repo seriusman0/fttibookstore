@@ -60,7 +60,7 @@ class MenuController extends Controller
         'harga' => 'required|numeric',
         'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'kategori' => 'required|string|max:100',
-        'stok' => 'required|integer|min:1',
+        'stok' => 'required|integer|min:0',
     ]);
 
     $data = $request->all();
@@ -92,9 +92,14 @@ class MenuController extends Controller
         return redirect()->route('menus.index')->with('success', 'Menu deleted successfully.');
     }
     public function search(Request $request)
-{
-    $query = $request->get('query');
-    $menu = Menu::where('nama', 'LIKE', "%{$query}%")->get(); // Adjust the model and column name as necessary
-    return response()->json($menu);
-}
+    {
+        $search = $request->search;
+        
+        $menu = Menu::where('nama', 'LIKE', "%{$search}%")
+                    ->orWhere('kategori', 'LIKE', "%{$search}%")
+                    ->get();
+        
+        $view = view('partials.menu-cards', compact('menu'))->render();
+        return $view;
+    }
 }

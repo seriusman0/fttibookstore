@@ -65,63 +65,71 @@
         @yield('content')
     </div>
 
+<script>
+document.getElementById('search-input').addEventListener('input', function() {
+    alert('hello');
+    <script>
+$(document).ready(function() {
+    let typingTimer;
+    const doneTypingInterval = 300;
+
+    $('#search-input').on('input', function() {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(performSearch, doneTypingInterval);
+    });
+
+    $('#search-form').on('submit', function(e) {
+        e.preventDefault();
+        performSearch();
+    });
+
+    function performSearch() {
+        let searchQuery = $('#search-input').val();
+        
+        $.ajax({
+            url: '{{ route("menus.search") }}', // Gunakan route helper untuk URL
+            method: 'GET',
+            data: { search: searchQuery }, // Perbaiki pengiriman data
+            success: function(response) {
+                $('#menu-cards').html(response);
+            }
+        });
+    }
+});
+</script>
+    
+});
+</script>
+<script>
+$(document).ready(function() {
+    let typingTimer;
+    const doneTypingInterval = 300;
+
+    $('#search-input').on('input', function() {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(performSearch, doneTypingInterval);
+    });
+
+    $('#search-form').on('submit', function(e) {
+        e.preventDefault();
+        performSearch();
+    });
+
+    function performSearch() {
+        let searchQuery = $('#search-input').val();
+        
+        $.ajax({
+            url: '{{ route("menus.search") }}', // Gunakan route helper untuk URL
+            method: 'GET',
+            data: { search: searchQuery }, // Perbaiki pengiriman data
+            success: function(response) {
+                $('#menu-cards').html(response);
+            }
+        });
+    }
+});
+</script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-  <script>
-       $(document).ready(function() {
-           $('#search-input').on('input', function() {
-               let query = $(this).val();
-               if (query.length > 0) {
-                   $.ajax({
-                       url: "",
-                       method: "GET",
-                       { query: query },
-                       success: function(data) {
-                           $('#menu-cards').empty(); // Clear the current cards
-                           if (data.length > 0) {
-                               data.forEach(function(item) {
-                                   $('#menu-cards').append(`
-                                       <div class="col-sm-4 mb-3 menu-item">
-                                           <div class="card">
-                                               <h5 class="card-header bg-info">${item.nama}</h5>
-                                               <div class="card-body">
-                                                   <img class="rounded mb-3" src="{{ asset('img/') }}/${item.gambar}" width="150" alt="${item.nama}">
-                                                   <table class="table table-striped">
-                                                       <tr>
-                                                           <td>Harga</td>
-                                                           <td>:</td>
-                                                           <td>Rp${item.harga}</td>
-                                                       </tr>
-                                                       <tr>
-                                                           <td>Kategori</td>
-                                                           <td>:</td>
-                                                           <td>${item.kategori}</td>
-                                                       </tr>
-                                                       <tr>
-                                                           <td>Stok</td>
-                                                           <td>:</td>
-                                                           <td>${item.stok}</td>
-                                                       </tr>
-                                                       <tr>
-                                                           <td colspan="3">
-                                                               <a class="btn btn-primary btn-block" href="#">Pesan</a>
-                                                           </td>
-                                                       </tr>
-                                                   </table>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   `);
-                               });
-                           } else {
-                               $('#menu-cards').append('<p>No results found.</p>');
-                           }
-                       }
-                   });
-               } else {
-                   $('#menu-cards').empty(); // Clear the current cards if input is empty
-               }
-           });
-       });
-   </script> 
+
 </body>
 </html>

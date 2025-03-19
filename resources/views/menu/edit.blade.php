@@ -42,7 +42,7 @@
         </div>
         <div class="form-group">
             <label for="stok">Stock</label>
-            <input type="number" class="form-control" name="stok" value="{{ old('stok', $menu->stok) }}" min="1" required>
+            <input type="number" class="form-control" name="stok" value="{{ old('stok', $menu->stok) }}"  required>
         </div>
         <button type="submit" class="btn btn-primary mt-3">Update</button>
     </form>

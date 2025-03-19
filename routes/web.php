@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/search-menu', [MenuController::class, 'search'])->name('menus.search'); // Assume you want to handle search via GET request
     Route::get('/menus', [MenuController::class, 'index'])->name('menus.index');
     Route::get('/menus/create', [MenuController::class, 'create'])->name('menus.create');
     Route::post('/menus', [MenuController::class, 'store'])->name('menus.store');
@@ -51,7 +52,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/menus/{menu}/edit', [MenuController::class, 'edit'])->name('menus.edit');
     Route::put('/menus/{menu}', [MenuController::class, 'update'])->name('menus.update');
     Route::delete('/menus/{menu}', [MenuController::class, 'destroy'])->name('menus.destroy');
-    Route::get('/menus/search', [MenuController::class, 'search'])->name('menus.search'); // Assume you want to handle search via GET request
 });
 
 
